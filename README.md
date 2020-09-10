@@ -1,10 +1,30 @@
 # transcode-cluster
 Usar varios servidores para una sola transcodificación de FFMPEG.
 
-De momento el repositorio es backup.
-Si te interesa el proyecto avisame y lo arreglamos
+Este script se usaba en BACUA para utilizar el poder de procesamiento de varios equipos para transcodificiar video más rápido.
 
-## Transcode Cluster!
+El mecanismo era simple:
+
+Uno de los equipos (nodos) es el MASTER.
+Los demás son nodos esclavos.
+
+El master tiene tres tareas:
+
+1. Dividir el archivo que se va a transcodificar en partes semi-iguales.
+> Como queremos que la transcodificación sea frame accurate, dividirlo en partes iguales puede dar un resultado indeseado.
+2. Servir las partes en una estructura de directorios accesible mediante la red por los demás nodos
+> En su implementación se usaba NFS por su velocidad, confianza y rebustez en sistemas linux, pero con otros FS también es posible.
+3. Una vez que todos los nodos completaron su tarea, unir las piezas para obtener el resultado final.
+
+Como dividir un video y unir varios es una tarea que no requiere procesar el video, FFMPEG la realiza en muy poco tiempo.
+En caso de estar usando 4 equipos de igual capacidad de procesamiento se puede dividir el video en 4 partes, entregar cada una a un nodo, y volver a unirlas cuando termine para realizar la tarea de transcodificacion (casi) 4 veces mas rápido.
+
+De momento el repositorio es un backup de los scripts realizado después de que se decidió cerrar Contenidos TDA.
+Si te interesa el proyecto pueden contactarme para realizar consultas.
+
+## README ORIGINAL INCOMPLETO
+
+### Transcode Cluster!
 Un sistemita de scripts para transcodear archivos de video
 en modo cluster
 
